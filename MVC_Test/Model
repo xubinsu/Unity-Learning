@@ -1,0 +1,79 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEditor;
+using UnityEngine;
+
+public class Model
+{
+    private string name;
+    private int lel;
+    private int exp;
+    private int gold;
+
+    public string Name { get => name; }
+    public int Lel { get => lel; }
+    public int Exp { get => exp; }
+    public int Gold { get => gold; }
+
+    public void AddLel()
+    {
+        lel += 1;
+        SaveData();
+    }
+
+    public void AddExp()
+    {
+        exp += 10;
+        SaveData();
+    }
+
+    public void AddGold()
+    {
+        gold += 100;
+        SaveData();
+    }
+
+    public void init() 
+    {
+        name = PlayerPrefs.GetString("Name", "Tom");
+        lel = PlayerPrefs.GetInt("Lel", 1);
+        exp = PlayerPrefs.GetInt("Exp", 1);
+        gold = PlayerPrefs.GetInt("Gold", 1);
+    }
+
+    public void SaveData()
+    {
+        PlayerPrefs.SetString("Name", name);
+        PlayerPrefs.SetInt("Lel", lel);
+        PlayerPrefs.SetInt("Exp", exp);
+        PlayerPrefs.SetInt("Gold", gold);
+        CallUpdateEvent();
+    }
+
+    private event Action<Model> updateEvent;
+    public void UpdateEvent(Action<Model> action)
+    {
+        updateEvent += action;
+        CallUpdateEvent();
+    }
+
+    public void CallUpdateEvent()
+    {
+        updateEvent?.Invoke(this);
+    }
+
+    private static Model model;
+    public static Model Instance
+    {
+        get
+        {
+            if(model == null)
+            {
+                model = new Model();
+                model.init();
+            }
+            return model;
+        }
+    }  
+}
