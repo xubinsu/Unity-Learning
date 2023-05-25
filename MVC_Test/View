@@ -1,0 +1,20 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class View : MonoBehaviour
+{
+    public Text Name;
+    public Text Lel;
+    public Text Exp;
+    public Text Gold;
+
+    public void UpdateView(Model model)
+    {
+        Name.text = "姓名" + model.Name;
+        Lel.text = "等级" + model.Lel;
+        Exp.text = "经验" + model.Exp;
+        Gold.text = "货币" + model.Gold;
+    }
+}
