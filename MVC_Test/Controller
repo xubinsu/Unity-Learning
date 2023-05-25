@@ -1,0 +1,23 @@
+using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class Controller : MonoBehaviour
+{
+    public View m_view;
+
+    public Button Lel;
+    public Button Exp;
+    public Button Gold;
+
+    private void Start()
+    {
+        Model.Instance.UpdateEvent(m_view.UpdateView);
+
+        Lel.onClick.AddListener(Model.Instance.AddLel);
+        Exp.onClick.AddListener(Model.Instance.AddExp);
+        Gold.onClick.AddListener(Model.Instance.AddGold);
+    }
+}
